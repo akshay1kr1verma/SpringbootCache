@@ -8,13 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
 
 @Service
 public class UserDetailService {
 
     @Autowired
     UserDetailsRepository userDetailsRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @Autowired
     EntityManagerFactory emf;
@@ -60,5 +68,21 @@ public class UserDetailService {
         em2.getTransaction().commit();
         em2.close();
         return output2;
+    }
+
+    public UserDetails saveUserUsingJdbcTemplate(String name, String email) {
+        String insertQuery = "insert into ONBOARDING.User_Details(name, email) values(?, ?)";
+        jdbcTemplate.update(insertQuery, name, email);
+        String createQuery = "select * from ONBOARDING.User_Details where name = (?)";
+        UserDetails ud = new UserDetails();
+        List<UserDetails> userDetailsList = jdbcTemplate.query(createQuery,  ps -> {
+            ps.setString(1, name);
+        }, (rs, rowNum) -> {
+            ud.setId(rs.getLong("id"));
+            ud.setEmail(rs.getString("email"));
+            ud.setName(rs.getString("name"));
+            return ud;
+        });
+        return userDetailsList.get(0);
     }
 }

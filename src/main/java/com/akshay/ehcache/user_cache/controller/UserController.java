@@ -11,6 +11,7 @@ public class UserController {
     @Autowired
     UserDetailService userDetailService;
 
+
     @GetMapping(path = "/test-jpa")
     public UserDetails getUser() {
         UserDetails userDetails = new UserDetails("xyx", "xyx@conceptcoding.com");
@@ -50,5 +51,11 @@ public class UserController {
    @DeleteMapping(path = "/user/{id}")
     public void evictUser(@PathVariable Long id) {
         userDetailService.evictUser(id);
+    }
+
+    @PostMapping(path = "jdbc-template/user")
+    public UserDetails insertUserUsingJdbcTemplate(@RequestParam(value = "name") String name,
+                                                   @RequestParam(value = "email") String email) {
+        return userDetailService.saveUserUsingJdbcTemplate(name, email);
     }
 }
