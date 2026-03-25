@@ -13,7 +13,7 @@ import lombok.Setter;
         uniqueConstraints = {@UniqueConstraint(columnNames = "phone"),
                 @UniqueConstraint(columnNames = {"name", "email"})},
         indexes = {@Index(name = "index_phone", columnList = "phone"),
-        @Index(name = "index_name_email", columnList = "name, email")})
+        @Index(name = "index_name_email", columnList = "full_name, email")})
 public class UserDetailsDTO implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "unique_user_seq")
