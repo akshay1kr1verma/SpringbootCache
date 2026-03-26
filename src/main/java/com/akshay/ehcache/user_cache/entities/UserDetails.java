@@ -1,15 +1,13 @@
 package com.akshay.ehcache.user_cache.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
 @NoArgsConstructor
+@Table(name = "USER_DETAILS", schema = "EMPLOYEE")
 /*@Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)*/
 public class UserDetails implements java.io.Serializable{
