@@ -1,13 +1,14 @@
 package com.akshay.ehcache.user_cache.entities;
 
 import com.akshay.ehcache.user_cache.dto.EmployeeDetailsDto;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 When Spring Boot (via Jackson) tries to convert to JSON:
@@ -51,6 +52,10 @@ public class EmployeeDetails implements java.io.Serializable {
     @JsonManagedReference
     // when managed reference used complete child object will be shown
     private EmployeeAddress employeeAddress;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
+    @JoinColumn(name = "emp_id_fk", referencedColumnName = "id")
+    private List<EmployeeOrderDetails> employeeOrderDetails = new ArrayList<>();
 
     public EmployeeDetailsDto toDto() {
         return new EmployeeDetailsDto(this);

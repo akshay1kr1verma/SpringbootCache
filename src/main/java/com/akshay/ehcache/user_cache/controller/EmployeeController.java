@@ -23,4 +23,9 @@ public class EmployeeController {
     public EmployeeDetailsDto fetchEmployee(@PathVariable Long id) {
         return employeeDetailService.fetchEmployee(id);
     }
+
+    @GetMapping(path = "/employee-remove-orphan/{id}")
+    public EmployeeDetailsDto fetchEmployeeAfterOrphanRemoval(@PathVariable Long id) {
+        return employeeDetailService.fetchEmployeeAfterOrphanRemoval(id);
+    }
 }

@@ -1,9 +1,12 @@
 package com.akshay.ehcache.user_cache.dto;
 
 import com.akshay.ehcache.user_cache.entities.EmployeeDetails;
+import com.akshay.ehcache.user_cache.entities.EmployeeOrderDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -16,15 +19,18 @@ public class EmployeeDetailsDto {
     private String phone;
     private String bankDetail;
     private String employeeAddress;
+    private List<EmployeeOrderDetails> employeeOrderDetails;
 
     public EmployeeDetailsDto(Long id, String name, String email, String phone,
-                              String bankDetail, String employeeAddress) {
+                              String bankDetail, String employeeAddress,
+                              List<EmployeeOrderDetails> employeeOrderDetails) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.bankDetail = bankDetail;
         this.employeeAddress = employeeAddress;
+        this.employeeOrderDetails = employeeOrderDetails;
     }
 
     public EmployeeDetailsDto (EmployeeDetails employeeDetails) {
@@ -38,5 +44,7 @@ public class EmployeeDetailsDto {
         System.out.println("now we are going to query employee bank details");
         this.bankDetail = employeeDetails.getBankDetail() != null
                 ? employeeDetails.getBankDetail().toString() : null;
+        System.out.println("now we are going to query employee order details");
+        employeeOrderDetails = employeeDetails.getEmployeeOrderDetails();
     }
 }
